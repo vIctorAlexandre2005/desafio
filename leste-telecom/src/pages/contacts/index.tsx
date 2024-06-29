@@ -1,11 +1,10 @@
 import { ContactsComponent } from "@/Components/ContactsComponent";
-import { Header } from "@/Components/Header";
+import { Box } from "@chakra-ui/react";
 
 export default function Contacts() {
     return (
-        <>
-        <Header />
-        <ContactsComponent />
-        </>
+        <Box>
+            <ContactsComponent />
+        </Box>
     )
 }

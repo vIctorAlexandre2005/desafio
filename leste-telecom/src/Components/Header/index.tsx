@@ -1,4 +1,5 @@
 import { Box, Flex, HStack, Img, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 export function Header() {
@@ -11,20 +12,29 @@ export function Header() {
                 </Box>
 
                 <Box display={"flex"} alignItems={"center"} gap={4}>
-                    <Box 
+                    <Box
                         p={"0.5rem"}
                         borderRadius={"12px"}
                         bg={router.pathname === '/contacts' ? 'green.green600' : ''}
                     >
-                        <Text 
-                            color={router?.pathname === '/contacts' ? "white" : 'black'}
-                        >
-                            Contatos
-                        </Text>
+                        <Link href={"/contacts"}>
+                            <Text
+                                color={router?.pathname === '/contacts' ? "white" : 'black'}
+                            >
+                                Contatos
+                            </Text>
+                        </Link>
                     </Box>
 
-                    <Box borderBottom={router.pathname === '/insights' ? '1px solid green.green600' : ''}>
-                        <Text color={router?.pathname === '/insights' ? "green.green600" : ''}>Resume</Text>
+                    <Box p={"0.5rem"}
+                        borderRadius={"12px"}
+                        bg={router.pathname === '/insights' ? 'green.green600' : ''}
+                    >
+                        <Link href={"/insights"}>
+                            <Text color={router?.pathname === '/insights' ? "white" : 'black'}>
+                                Estatísticas
+                            </Text>
+                        </Link>
                     </Box>
                 </Box>
             </Flex>
