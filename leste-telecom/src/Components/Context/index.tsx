@@ -1,15 +1,13 @@
-import { contacts } from "@/services/getLesteTelecom";
+import { contacts as initialContacts } from "@/services/getLesteTelecom";
 import { Contact } from "@/types/interfaces/contact";
 import { useDisclosure } from "@chakra-ui/react";
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
-// Definindo o tipo para o gênero selecionado
 export interface SelectedGenderProps {
     selectedGender: string;
     setSelectedGender: Dispatch<SetStateAction<string>>;
 }
 
-// Definindo o tipo do contexto
 export interface VariablesContextType {
     selectedGender: string;
     setSelectedGender: Dispatch<SetStateAction<string>>;
@@ -19,7 +17,6 @@ export interface VariablesContextType {
     AddContact: (contact: Contact) => void;
 }
 
-// Valor padrão do contexto
 const defaultValue: VariablesContextType = {
     selectedGender: "",
     setSelectedGender: () => {
@@ -32,43 +29,39 @@ const defaultValue: VariablesContextType = {
     setFilteredContacts: () => {
         throw new Error("setFilteredContacts function is not implemented");
     },
-    AddContact: () => {
+    AddContact: () => { }
+};
 
-    }
-}
-
-// Criando o contexto
 const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 
-// Componente que envolve a aplicação para prover o contexto
 export default function ParamsContextProvider({ children }: { children: ReactNode }) {
     const [selectedGender, setSelectedGender] = useState<string>("");
-    const [filteredContacts, setFilteredContacts] = useState<Contact[]>(contacts);
+    const [filteredContacts, setFilteredContacts] = useState<Contact[]>(initialContacts);
 
-    // Função para alterar o gênero selecionado
     const handleGenderChange = (gender: string) => {
         setSelectedGender(gender);
     };
 
-    function AddContact(contact: Contact) {
-        const updatedContacts = [...contacts, contact];
+    const AddContact = (contact: Contact) => {
+        const updatedContacts = [...filteredContacts, contact];
         setFilteredContacts(updatedContacts);
-        // Se você estiver salvando contatos no localStorage, faça isso aqui
         localStorage.setItem('contacts', JSON.stringify(updatedContacts));
     };
 
     useEffect(() => {
-        console.log("contacts:", contacts); // Adicione esse log
-        console.log("selectedGender:", selectedGender);
+        const savedContacts = localStorage.getItem('contacts');
 
         if (selectedGender) {
-            const filteredGender = contacts.filter(contact => contact.gender === selectedGender);
+            const filteredGender = initialContacts.filter(contact => contact.gender === selectedGender);
             setFilteredContacts(filteredGender);
-            console.log("filteredGender:", filteredGender); // Adicione esse log
         } else {
-            setFilteredContacts(contacts);
-            console.log("filteredContacts:", contacts); // Adicione esse log
-        }
+            setFilteredContacts(initialContacts);
+        };
+
+        if (savedContacts) {
+            setFilteredContacts(JSON.parse(savedContacts));
+        };
+
     }, [selectedGender]);
 
     return (
@@ -87,5 +80,4 @@ export default function ParamsContextProvider({ children }: { children: ReactNod
     );
 };
 
-// Hook para utilizar o contexto
 export const useContextGlobal = () => useContext(ParamsProvider);

@@ -55,6 +55,9 @@ export const CardComponent: React.FC<CardComponentProps> = ({
         <CardHeader justifyContent={"center"} display={"flex"} alignItems="center">
             <Img
                 src={contact.avatar}
+                h={"130px"}
+                w={"130px"}
+                objectFit={"cover"}
                 borderRadius={"50%"}
                 border={"2px solid"}
                 borderColor={"black.300"}
@@ -77,7 +80,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
                         </Text>
                     </Flex>
 
-                    <Flex mb={"0.5rem"} align={"center"}>
+                    <Flex gap={1} mb={"0.5rem"} align={"center"}>
                         <Text gap={1} alignItems={"center"} fontWeight={"500"} fontSize={"0.85rem"} display={"flex"}>
                             <MdEmail size={18} /> Email:
                         </Text>

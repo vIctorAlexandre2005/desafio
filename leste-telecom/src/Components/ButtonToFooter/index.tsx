@@ -37,7 +37,11 @@ export function ScrollToTopButton() {
             </Button>
 
             {isAddContactModal && (
-                <AddContactModal isOpen={isAddContactModal} onOpen={onOpenAddContactModal} onClose={onCloseAddContactModal} />
+                <AddContactModal 
+                    isOpen={isAddContactModal} 
+                    onOpen={onOpenAddContactModal} 
+                    onClose={onCloseAddContactModal} 
+                />
             )}
         </>
     );
