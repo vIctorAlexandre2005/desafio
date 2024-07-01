@@ -2,6 +2,7 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { CardsToFilterComponent } from "../CardsToFilter";
 import { CardsContacts } from "../CardsToContacts";
 import ParamsContextProvider from "../Context";
+import { ScrollToTopButton } from "../ButtonToFooter";
 
 export function ContactsComponent() {
     return (
@@ -29,6 +30,7 @@ export function ContactsComponent() {
                     </Box>
                 </Flex>
             </Box>
+            <ScrollToTopButton />
         </ParamsContextProvider>
     );
 }

@@ -1,5 +1,6 @@
 import { contacts } from "@/services/getLesteTelecom";
 import { Contact } from "@/types/interfaces/contact";
+import { useDisclosure } from "@chakra-ui/react";
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 // Definindo o tipo para o gênero selecionado
@@ -15,6 +16,7 @@ export interface VariablesContextType {
     handleGenderChange: (gender: string) => void;
     filteredContacts: Contact[];
     setFilteredContacts: Dispatch<SetStateAction<Contact[]>>;
+    AddContact: (contact: Contact) => void;
 }
 
 // Valor padrão do contexto
@@ -30,6 +32,9 @@ const defaultValue: VariablesContextType = {
     setFilteredContacts: () => {
         throw new Error("setFilteredContacts function is not implemented");
     },
+    AddContact: () => {
+
+    }
 }
 
 // Criando o contexto
@@ -43,6 +48,13 @@ export default function ParamsContextProvider({ children }: { children: ReactNod
     // Função para alterar o gênero selecionado
     const handleGenderChange = (gender: string) => {
         setSelectedGender(gender);
+    };
+
+    function AddContact(contact: Contact) {
+        const updatedContacts = [...contacts, contact];
+        setFilteredContacts(updatedContacts);
+        // Se você estiver salvando contatos no localStorage, faça isso aqui
+        localStorage.setItem('contacts', JSON.stringify(updatedContacts));
     };
 
     useEffect(() => {
@@ -67,6 +79,7 @@ export default function ParamsContextProvider({ children }: { children: ReactNod
                 filteredContacts,
                 setFilteredContacts,
                 handleGenderChange,
+                AddContact
             }}
         >
             {children}
