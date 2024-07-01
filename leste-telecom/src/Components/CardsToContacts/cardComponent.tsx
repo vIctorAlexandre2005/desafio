@@ -1,18 +1,32 @@
 import { Contact } from "@/types/interfaces/contact";
-import { Button, Card, CardBody, CardFooter, CardHeader, Flex, HStack, Img, Text } from "@chakra-ui/react";
+import { InformationModalContact } from "@/utils/modals/InformationContact";
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, HStack, Img, Text } from "@chakra-ui/react";
 import React from "react";
 import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { FaBirthdayCake } from "react-icons/fa";
+import { IoIosInformationCircle } from "react-icons/io";
 import { IoManSharp, IoWomanSharp } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 
-interface CardComponentProps {
+export interface CardComponentProps {
     contact: Contact;
     onEdit: (contact: Contact) => void;
     onDelete: (contact: Contact) => void;
+    isOpen: boolean;
+    onOpen: (contact : Contact) => void;
+    onClose: () => void
+    handleOpenInformationsModal: (contact: Contact) => void;
 };
 
-export const CardComponent: React.FC<CardComponentProps> = ({ contact, onDelete, onEdit }) => (
+export const CardComponent: React.FC<CardComponentProps> = ({ 
+    contact, 
+    onDelete, 
+    onEdit, 
+    isOpen, 
+    onClose, 
+    onOpen ,
+    handleOpenInformationsModal
+}) => (
     <Card
         _hover={{
             bg: 'green.green600',
@@ -25,6 +39,19 @@ export const CardComponent: React.FC<CardComponentProps> = ({ contact, onDelete,
         borderColor={"black.200"}
         boxShadow={"none"}
     >
+        <CardHeader p={"0"} display={"flex"} justifyContent={"right"}>
+            <Button 
+                bg={"transparent"} 
+                _hover={{
+                    bg: 'green.green700',
+                    color: 'white'
+                }} 
+                p={"0.5rem"}
+                onClick={() => handleOpenInformationsModal(contact)}
+            >
+                <IoIosInformationCircle size={24} />
+            </Button>
+        </CardHeader>
         <CardHeader justifyContent={"center"} display={"flex"} alignItems="center">
             <Img
                 src={contact.avatar}

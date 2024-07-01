@@ -70,7 +70,7 @@ export function AddContactModal({ isOpen, onOpen, onClose }: StatesAction) {
                             mb={"1rem"}
                             type="text"
                             placeholder="Nome"
-                            value={newContact.first_name}
+                            /* value={newContact.first_name} */
                             onChange={handleChange}
                         />
 
@@ -79,8 +79,8 @@ export function AddContactModal({ isOpen, onOpen, onClose }: StatesAction) {
                             type="text"
                             mb={"1rem"}
                             placeholder="Sobrenome"
-                            value={newContact.last_name}
-                            onChange={handleChange}
+                            /* value={newContact.last_name}
+ */                            onChange={handleChange}
                         />
 
                         <Text>Data de nascimento</Text>
@@ -94,8 +94,8 @@ export function AddContactModal({ isOpen, onOpen, onClose }: StatesAction) {
                             mb={"1rem"}
                             type="text"
                             placeholder="Nascimento"
-                            value={newContact.birthday}
-                            onChange={handleChange}
+                            /* value={newContact.birthday}
+  */                           onChange={handleChange}
                         />
 
                         <Text>Idioma</Text>
@@ -109,15 +109,15 @@ export function AddContactModal({ isOpen, onOpen, onClose }: StatesAction) {
                             mb={"1rem"}
                             type="text"
                             placeholder="Idioma"
-                            value={newContact.language}
-                            onChange={handleChange}
+                            /* value={newContact.language}
+  */                           onChange={handleChange}
                         />
 
                         <Select
                             name="gender"
                             placeholder="Select Gender"
-                            value={newContact.gender}
-                            onChange={handleChange}
+                            /* value={newContact.gender}
+    */                         onChange={handleChange}
                         >
                             <option value="M">Masculino</option>
                             <option value="F">Feminino</option>

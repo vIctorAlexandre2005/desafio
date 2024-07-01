@@ -5,16 +5,20 @@ import { DeleteCardModal } from "@/utils/modals/DeleteContact";
 import { CardComponent } from "./cardComponent";
 import { Contact } from "@/types/interfaces/contact";
 import { useContextGlobal } from "../Context";
+import { InformationModalContact } from "@/utils/modals/InformationContact";
 
 export function CardsContacts() {
 
     const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
     const [selectedContactDeleted, setSelectedContactDeleted] = useState<Contact | null>(null);
+    const [selectedContactInformation, setSelectedContactInformation] = useState<Contact | null>(null);
+
 
     const { filteredContacts } = useContextGlobal();
 
     const { isOpen: isEditModalOpen, onOpen: onOpenEditModal, onClose: onCloseEditModal } = useDisclosure();
     const { isOpen: isDeleteModalOpen, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal } = useDisclosure();
+    const { isOpen: isOpenInformationModal, onOpen: onOpenInformationModal, onClose: onCloseInformationModal } = useDisclosure();
 
     function handleOpenEditModal(contact: Contact) {
         setSelectedContact(contact);
@@ -26,6 +30,11 @@ export function CardsContacts() {
         onOpenDeleteModal();
     };
 
+    function handleOpenInformationsModal(contact: Contact) {
+        setSelectedContactInformation(contact);
+        onOpenInformationModal();
+    };
+
     useEffect(() => {
         console.log("filteredContacts in CardsContacts:", filteredContacts);
     }, [filteredContacts]);
@@ -35,10 +44,14 @@ export function CardsContacts() {
             <SimpleGrid columns={3} spacingX='40px' spacingY='20px'>
                 {filteredContacts.map((item, idx) => (
                     <Fragment key={idx}>
-                        <CardComponent 
+                        <CardComponent
+                            isOpen={isOpenInformationModal}
+                            onOpen={onOpenInformationModal}
+                            onClose={onCloseInformationModal}
                             contact={item} 
                             onEdit={handleOpenEditModal} 
                             onDelete={handleOpenDeleteModal} 
+                            handleOpenInformationsModal={handleOpenInformationsModal}
                         />
 
                         {isEditModalOpen && selectedContact && (
@@ -55,6 +68,15 @@ export function CardsContacts() {
                                 handleOpenModalDeleteCard={handleOpenDeleteModal}
                                 contact={selectedContactDeleted}
                                 setIsOpenDeleteCardModal={onCloseDeleteModal}
+                            />
+                        )}
+
+                        {isOpenInformationModal && selectedContactInformation && (
+                            <InformationModalContact
+                                contact={selectedContactInformation}
+                                isOpen={isOpenInformationModal}
+                                onClose={onCloseInformationModal}
+                                handleOpenInformationsModal={handleOpenInformationsModal}
                             />
                         )}
                     </Fragment>
