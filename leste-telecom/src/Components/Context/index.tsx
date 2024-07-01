@@ -1,6 +1,5 @@
 import { contacts as initialContacts } from "@/services/getLesteTelecom";
 import { Contact } from "@/types/interfaces/contact";
-import { useDisclosure } from "@chakra-ui/react";
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 export interface SelectedGenderProps {
@@ -36,33 +35,39 @@ const ParamsProvider = createContext<VariablesContextType>(defaultValue);
 
 export default function ParamsContextProvider({ children }: { children: ReactNode }) {
     const [selectedGender, setSelectedGender] = useState<string>("");
+    const [contacts, setContacts] = useState<Contact[]>(initialContacts);
     const [filteredContacts, setFilteredContacts] = useState<Contact[]>(initialContacts);
+
+    useEffect(() => {
+        const savedContacts = localStorage.getItem('contacts');
+
+        if (savedContacts) {
+            const parsedContacts = JSON.parse(savedContacts);
+            setContacts(parsedContacts);
+            setFilteredContacts(parsedContacts);
+        };
+
+    }, []);
 
     const handleGenderChange = (gender: string) => {
         setSelectedGender(gender);
     };
 
     const AddContact = (contact: Contact) => {
-        const updatedContacts = [...filteredContacts, contact];
+        const updatedContacts = [...contacts, contact];
+        setContacts(updatedContacts);
         setFilteredContacts(updatedContacts);
         localStorage.setItem('contacts', JSON.stringify(updatedContacts));
     };
 
     useEffect(() => {
-        const savedContacts = localStorage.getItem('contacts');
-
         if (selectedGender) {
-            const filteredGender = initialContacts.filter(contact => contact.gender === selectedGender);
+            const filteredGender = contacts.filter(contact => contact.gender === selectedGender);
             setFilteredContacts(filteredGender);
         } else {
-            setFilteredContacts(initialContacts);
-        };
-
-        if (savedContacts) {
-            setFilteredContacts(JSON.parse(savedContacts));
-        };
-
-    }, [selectedGender]);
+            setFilteredContacts(contacts);
+        }
+    }, [selectedGender, contacts]);
 
     return (
         <ParamsProvider.Provider

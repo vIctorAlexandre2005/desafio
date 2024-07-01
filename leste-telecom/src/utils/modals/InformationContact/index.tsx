@@ -1,5 +1,5 @@
 import { Contact } from "@/types/interfaces/contact";
-import { Button, Flex, Img, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Img, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
 
 export interface InformationContactProps {
     contact: Contact;
@@ -47,7 +47,10 @@ export function InformationModalContact({ isOpen, onClose, contact, handleOpenIn
                         borderRadius={"50%"}
                     />
                     </Flex>
-                    <Text>First Name </Text>
+                    
+                    <Flex justify={"center"} gap={4}>
+                        <Box>
+                        <Text>First Name </Text>
                     <Input
                         _focus={{
                             outline: 0,
@@ -59,12 +62,16 @@ export function InformationModalContact({ isOpen, onClose, contact, handleOpenIn
                         type="text"
                         value={contact?.first_name}
                     />
+                        </Box>
 
+                    <Box>
                     <Text>Last Name </Text>
                     <Input
                         type="text"
                         value={contact?.last_name}
                     />
+                    </Box>
+                    </Flex>
 
                     <Text>Gênero </Text>
                     <Input
