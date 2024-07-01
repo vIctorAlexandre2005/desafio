@@ -1,9 +1,9 @@
 export async function getServerSideProps() {
   return {
-      redirect: {
-          destination: '/contacts',
-          permanent: false,
-      },
+    redirect: {
+      destination: '/contacts',
+      permanent: false,
+    },
   };
 };
 

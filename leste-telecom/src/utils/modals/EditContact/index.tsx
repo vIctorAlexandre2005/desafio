@@ -1,11 +1,19 @@
-import { Button, Flex, Img, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
+import { Contact } from "@/types/interfaces/contact";
+import { Button, Img, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
 import { BiEditAlt } from "react-icons/bi";
 
-export function EditCardModal({ isOpen, setIsOpen, profile }: any) {
+interface EditCardContacts {
+    isOpen: boolean;
+    setIsOpen: Dispatch<SetStateAction<boolean>>,
+    contact: Contact;
+}
 
-    console.log("Profile em Modal:", profile);
+export function EditCardModal({ isOpen, setIsOpen, contact }: EditCardContacts) {
 
-    if (!profile) {
+    console.log("contact em Modal:", contact);
+
+    if (!contact) {
         return null; // Se o perfil não estiver definido, não renderize o modal
     }
 
@@ -30,7 +38,7 @@ export function EditCardModal({ isOpen, setIsOpen, profile }: any) {
                 <ModalBody>
                     <Img
                         mb={"1rem"}
-                        src={profile?.avatar}
+                        src={contact?.avatar}
                         w={90}
                         h={90}
                         border={"1px solid"}
@@ -46,13 +54,13 @@ export function EditCardModal({ isOpen, setIsOpen, profile }: any) {
                         }}
                         mb={"1rem"}
                         type="text"
-                        placeholder={profile?.first_name}
+                        placeholder={contact?.first_name}
                     />
 
                     <Text>Last Name </Text>
                     <Input
                         type="text"
-                        placeholder={profile?.last_name}
+                        placeholder={contact?.last_name}
                     />
                 </ModalBody>
 

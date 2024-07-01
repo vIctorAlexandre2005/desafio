@@ -3,11 +3,11 @@ export const FiltersGenders = [
         type: 'gender',
         title: 'Gênero',
         options: 'Feminino',
-        value: '1'
+        value: 'F'
     },
 
     {
-        value: '2',
+        value: 'M',
         options: 'Masculino'
     }
 ]

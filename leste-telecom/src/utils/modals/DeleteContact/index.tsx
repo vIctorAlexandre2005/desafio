@@ -22,7 +22,7 @@ export function DeleteCardModal({ isOpenDeleteCardModal, setIsOpenDeleteCardModa
                         display={"flex"}
                         alignItems={"center"}
                         fontSize={"1.25rem"}
-                    > 
+                    >
                         Deseja realmente deletar este contato?
                     </Text>
                 </ModalHeader>
@@ -67,7 +67,7 @@ export function DeleteCardModal({ isOpenDeleteCardModal, setIsOpenDeleteCardModa
                         color='black.100'
                         bg='red.700'
                         w={"100%"}
-                    > 
+                    >
                         <BiTrash size={20} /> Deletar
                     </Button>
 
@@ -80,7 +80,7 @@ export function DeleteCardModal({ isOpenDeleteCardModal, setIsOpenDeleteCardModa
                         w={"100%"}
                         bg={"green.400"}
                         color={"white"}
-                    > 
+                    >
                         Cancelar
                     </Button>
                 </ModalFooter>

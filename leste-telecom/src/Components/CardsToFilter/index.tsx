@@ -1,6 +1,11 @@
 import { FiltersComponents } from "@/utils/FiltersInCardComponent";
-import { Card, CardBody, CardHeader, Text } from "@chakra-ui/react";
+import { Card, CardHeader, CardBody, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import { useContextGlobal } from "../Context";
+
 export function CardsToFilterComponent() {
+    const { handleGenderChange } = useContextGlobal();
+
     return (
         <Card w={"16rem"} boxShadow={"none"} border={"1px solid"} borderColor={"black.100"} bg={"black.50"}>
             <CardHeader p={"0.75rem"} borderBottom={"1px solid"} borderBottomColor={"black.200"}>
@@ -8,8 +13,8 @@ export function CardsToFilterComponent() {
             </CardHeader>
 
             <CardBody>
-                <FiltersComponents />
+                <FiltersComponents onGenderChange={handleGenderChange} />
             </CardBody>
         </Card>
-    )
-}
+    );
+};

@@ -1,25 +1,40 @@
-import { Fragment } from "react"
-import { FiltersGenders } from "../filters"
-import { Radio, RadioGroup, Select, Stack, Text } from "@chakra-ui/react"
-import { filterBirthday } from "../filters/birthday"
-import { LanguagesContactsFilters } from "../filters/languages/languages"
+import { Fragment, useState } from "react";
+import { FiltersGenders } from "../filters";
+import { Radio, RadioGroup, Select, Stack, Text } from "@chakra-ui/react";
+import { filterBirthday } from "../filters/birthday";
+import { contacts } from "@/services/getLesteTelecom";
+import { useContextGlobal } from "@/Components/Context";
 
-export function FiltersComponents() {
+interface FiltersComponentsProps {
+    onGenderChange: (gender: string) => void;
+}
+
+export const FiltersComponents: React.FC<FiltersComponentsProps> = ({ onGenderChange }) => {
+    const { selectedGender, setSelectedGender } = useContextGlobal();
+
+    const handleGenderChangeFilter = (value: string) => {
+        setSelectedGender(value);
+        onGenderChange(value);
+        console.log("valor clicado:", value)
+    };
+
     return (
         <>
-            {/* Abaixo segue o conteúdo de filtragem por gêneros */}
+            {/* Filtragem por gêneros */}
             {FiltersGenders.map((item, idx) => (
                 <Fragment key={idx}>
                     <Text color={"green.green500"} mb={"0.5rem"} fontSize={"1.25rem"}>{item.title}</Text>
-                    <RadioGroup defaultValue={item.value} >
-                        <Stack>
-                            <Radio value={item.value}>{item.options}</Radio>
+                    <RadioGroup value={selectedGender} onChange={handleGenderChangeFilter}>
+                        <Stack> 
+                            <Fragment key={item.value}>
+                                <Radio value={item.value}>{item.options}</Radio>
+                            </Fragment>
                         </Stack>
                     </RadioGroup>
                 </Fragment>
             ))}
-            
-            {/* Abaixo segue o conteúdo de filtragem por Data de nascimento */}
+
+            {/* Filtragem por Data de nascimento */}
             {filterBirthday.map((item, idx) => (
                 <Fragment key={idx}>
                     <Text color={"green.green500"} mb={"0.5rem"} fontSize={"1.25rem"}>{item.title}</Text>
@@ -31,15 +46,15 @@ export function FiltersComponents() {
                 </Fragment>
             ))}
 
-            {/* Abaixo segue o conteúdo de filtragem por Idiomas */}
+            {/* Filtragem por Idiomas */}
             <Text color={"green.green500"} mb={"0.5rem"} fontSize={"1.25rem"}>Idiomas</Text>
             <Select>
-            {LanguagesContactsFilters.map((item, idx) => (
-               <Fragment key={idx}>
-                <option>{item.options}</option>
-               </Fragment> 
-            ))}
+                {contacts.map((item, idx) => (
+                    <Fragment key={idx}>
+                        <option>{item.language}</option>
+                    </Fragment>
+                ))}
             </Select>
         </>
-    )
-}
+    );
+};
