@@ -14,6 +14,8 @@ export interface VariablesContextType {
     filteredContacts: Contact[];
     setFilteredContacts: Dispatch<SetStateAction<Contact[]>>;
     AddContact: (contact: Contact) => void;
+    updateContact: (updatedContact: Contact) => void;
+    deleteContact: (contactId: number) => void; // Adicionando a função deleteContact
 }
 
 const defaultValue: VariablesContextType = {
@@ -28,7 +30,13 @@ const defaultValue: VariablesContextType = {
     setFilteredContacts: () => {
         throw new Error("setFilteredContacts function is not implemented");
     },
-    AddContact: () => { }
+    AddContact: () => { },
+    updateContact: () => {
+        throw new Error("updateContact function is not implemented");
+    },
+    deleteContact: () => {
+        throw new Error("deleteContact function is not implemented");
+    },
 };
 
 const ParamsProvider = createContext<VariablesContextType>(defaultValue);
@@ -60,6 +68,22 @@ export default function ParamsContextProvider({ children }: { children: ReactNod
         localStorage.setItem('contacts', JSON.stringify(updatedContacts));
     };
 
+    const updateContact = (updatedContact: Contact) => {
+        const updatedContacts = contacts.map(contact =>
+            contact.id === updatedContact.id ? updatedContact : contact
+        );
+        setContacts(updatedContacts);
+        setFilteredContacts(updatedContacts);
+        localStorage.setItem('contacts', JSON.stringify(updatedContacts));
+    };
+
+    const deleteContact = (contactId: number) => {
+        const updatedContacts = contacts.filter(contact => contact.id !== contactId);
+        setContacts(updatedContacts);
+        setFilteredContacts(updatedContacts);
+        localStorage.setItem('contacts', JSON.stringify(updatedContacts));
+    };
+
     useEffect(() => {
         if (selectedGender) {
             const filteredGender = contacts.filter(contact => contact.gender === selectedGender);
@@ -77,7 +101,9 @@ export default function ParamsContextProvider({ children }: { children: ReactNod
                 filteredContacts,
                 setFilteredContacts,
                 handleGenderChange,
-                AddContact
+                AddContact,
+                updateContact,
+                deleteContact
             }}
         >
             {children}

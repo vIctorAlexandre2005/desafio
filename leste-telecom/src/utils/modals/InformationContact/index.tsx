@@ -1,3 +1,4 @@
+import { InformationInputsForm } from "@/Components/InputsFormDefault/InformationInputs";
 import { Contact } from "@/types/interfaces/contact";
 import { Box, Button, Flex, Img, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
 
@@ -8,7 +9,12 @@ export interface InformationContactProps {
     handleOpenInformationsModal: (contact: Contact) => void
 };
 
-export function InformationModalContact({ isOpen, onClose, contact, handleOpenInformationsModal }: InformationContactProps) {
+export function InformationModalContact({
+    isOpen,
+    onClose,
+    contact,
+    handleOpenInformationsModal
+}: InformationContactProps) {
 
     console.log("contact em Modal:", contact);
 
@@ -35,66 +41,11 @@ export function InformationModalContact({ isOpen, onClose, contact, handleOpenIn
                 </ModalHeader>
 
                 <ModalBody>
-                    <Flex justify={"center"}>
-                    <Img
-                        mb={"1rem"}
-                        src={contact?.avatar}
-                        w={90}
-                        h={90}
-                        objectFit={"cover"}
-                        border={"1px solid"}
-                        borderColor={"black.200"}
-                        borderRadius={"50%"}
-                    />
-                    </Flex>
-                    
-                    <Flex justify={"center"} gap={4}>
-                        <Box>
-                        <Text>First Name </Text>
-                    <Input
-                        _focus={{
-                            outline: 0,
-                            border: '1px solid',
-                            borderColor: 'green.green600'
-                        }}
-                        mb={"1rem"}
-                        color={"black"}
-                        type="text"
-                        value={contact?.first_name}
-                    />
-                        </Box>
-
-                    <Box>
-                    <Text>Last Name </Text>
-                    <Input
-                        type="text"
-                        value={contact?.last_name}
-                    />
-                    </Box>
-                    </Flex>
-
-                    <Text>Gênero </Text>
-                    <Input
-                        type="text"
-                        value={contact?.gender}
-                    />
-
-                    <Text>Idioma</Text>
-                    <Input
-                        type="text"
-                        value={contact?.language}
-                    />
-
-                    <Text>Email</Text>
-                    <Input
-                        type="email"
-                        value={contact?.email}
-                    />
-
-                    <Text>Data de nascimento</Text>
-                    <Input
-                        type="text"
-                        value={contact?.birthday}
+                    <InformationInputsForm
+                        contact={contact}
+                        handleOpenInformationsModal={handleOpenInformationsModal}
+                        isOpen={isOpen}
+                        onClose={onClose}
                     />
                 </ModalBody>
 

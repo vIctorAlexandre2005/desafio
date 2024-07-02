@@ -1,21 +1,32 @@
-import { Button, Flex, Img, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
-import { BiEditAlt, BiTrash } from "react-icons/bi";
+import { useContextGlobal } from "@/Components/Context";
+import { InputsDeleteContacts } from "@/Components/InputsFormDefault/DeleteForm";
+import { Contact } from "@/types/interfaces/contact";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
+import { BiTrash } from "react-icons/bi";
 
-export function DeleteCardModal({ isOpenDeleteCardModal, setIsOpenDeleteCardModal, profile }: any) {
+export interface VariablesDeleteContact {
+    isOpenDeleteCardModal: boolean;
+    setIsOpenDeleteCardModal: Dispatch<SetStateAction<boolean>>;
+    contact: Contact
+}
 
-    console.log("Profile em Modal:", profile);
+export function DeleteCardModal({ isOpenDeleteCardModal, setIsOpenDeleteCardModal, contact }: VariablesDeleteContact) {
+    const { deleteContact } = useContextGlobal();
 
-    if (!profile) {
+    const handleDelete = () => {
+        deleteContact(contact.id);
+        setIsOpenDeleteCardModal(false); // Fecha o modal após deletar
+    };
+
+    if (!contact) {
         return null; // Se o perfil não estiver definido, não renderize o modal
     }
 
     return (
         <Modal isCentered isOpen={isOpenDeleteCardModal} onClose={() => setIsOpenDeleteCardModal(false)}>
             <ModalOverlay bg={"#00000009"} />
-            <ModalContent
-                bg={"black.50"}
-                boxShadow={"none"}
-            >
+            <ModalContent bg={"black.50"} boxShadow={"none"}>
                 <ModalHeader display={"flex"} justifyContent={"center"}>
                     <Text
                         gap={1}
@@ -28,45 +39,21 @@ export function DeleteCardModal({ isOpenDeleteCardModal, setIsOpenDeleteCardModa
                 </ModalHeader>
 
                 <ModalBody>
-                    <Img
-                        mb={"1rem"}
-                        src={profile?.avatar}
-                        w={90}
-                        h={90}
-                        border={"1px solid"}
-                        borderColor={"black.200"}
-                        borderRadius={"50%"}
-                    />
-                    <Text>First Name </Text>
-                    <Input
-                        _focus={{
-                            outline: 0,
-                            border: '1px solid',
-                            borderColor: 'green.green600'
-                        }}
-                        mb={"1rem"}
-                        type="text"
-                        disabled
-                        value={profile?.first_name}
-                    />
-
-                    <Text>Last Name </Text>
-                    <Input
-                        type="text"
-                        disabled
-                        value={profile?.last_name}
+                    <InputsDeleteContacts 
+                        isOpenDeleteCardModal={isOpenDeleteCardModal} 
+                        setIsOpenDeleteCardModal={setIsOpenDeleteCardModal} 
+                        contact={contact} 
                     />
                 </ModalBody>
 
                 <ModalFooter gap={4}>
                     <Button
                         gap={1}
-                        _hover={{
-                            bg: 'red.900',
-                        }}
+                        _hover={{ bg: 'red.900' }}
                         color='black.100'
                         bg='red.700'
                         w={"100%"}
+                        onClick={handleDelete}
                     >
                         <BiTrash size={20} /> Deletar
                     </Button>
@@ -74,9 +61,7 @@ export function DeleteCardModal({ isOpenDeleteCardModal, setIsOpenDeleteCardModa
                     <Button
                         onClick={() => setIsOpenDeleteCardModal(false)}
                         gap={1}
-                        _hover={{
-                            bg: 'green.green600'
-                        }}
+                        _hover={{ bg: 'green.green600' }}
                         w={"100%"}
                         bg={"green.400"}
                         color={"white"}
@@ -86,5 +71,5 @@ export function DeleteCardModal({ isOpenDeleteCardModal, setIsOpenDeleteCardModa
                 </ModalFooter>
             </ModalContent>
         </Modal>
-    )
+    );
 }

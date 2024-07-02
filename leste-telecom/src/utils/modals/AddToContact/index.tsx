@@ -2,6 +2,7 @@ import { StatesAction } from "@/Components/ButtonToFooter";
 import { useContextGlobal } from "@/Components/Context";
 import { contacts } from "@/services/getLesteTelecom";
 import { Contact } from "@/types/interfaces/contact";
+import { formatBirthdayAddContactForm } from "@/utils/formatDate";
 import { Box, Button, Flex, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from "@chakra-ui/react";
 import { Fragment, useState } from "react";
 
@@ -19,22 +20,12 @@ export function AddContactModal({ isOpen, onOpen, onClose } : StatesAction) {
 
     const { AddContact } = useContextGlobal();
 
-    const formatBirthday = (value: string) => {
-        const cleaned = value.replace(/\D+/g, '');
-        const match = cleaned.match(/^(\d{4})(\d{0,2})(\d{0,2})$/);
-
-        if (match) {
-            return `${match[1]}${match[2] ? '-' + match[2] : ''}${match[3] ? '-' + match[3] : ''}`;
-        }
-        return value;
-    };
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
 
         let formattedValue = value;
         if (name === "birthday") {
-            formattedValue = formatBirthday(value);
+            formattedValue = formatBirthdayAddContactForm(value);
         }
 
         setNewContact({ ...newContact, [name]: formattedValue });

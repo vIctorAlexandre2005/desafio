@@ -8,13 +8,11 @@ import { useContextGlobal } from "../Context";
 import { InformationModalContact } from "@/utils/modals/InformationContact";
 
 export function CardsContacts() {
-
     const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
     const [selectedContactDeleted, setSelectedContactDeleted] = useState<Contact | null>(null);
     const [selectedContactInformation, setSelectedContactInformation] = useState<Contact | null>(null);
 
-
-    const { filteredContacts } = useContextGlobal();
+    const { filteredContacts, updateContact } = useContextGlobal();
 
     const { isOpen: isEditModalOpen, onOpen: onOpenEditModal, onClose: onCloseEditModal } = useDisclosure();
     const { isOpen: isDeleteModalOpen, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal } = useDisclosure();
@@ -35,10 +33,6 @@ export function CardsContacts() {
         onOpenInformationModal();
     };
 
-    useEffect(() => {
-        console.log("filteredContacts in CardsContacts:", filteredContacts);
-    }, [filteredContacts]);
-
     return (
         <>
             <SimpleGrid columns={3} spacingX='40px' spacingY='20px'>
@@ -48,9 +42,9 @@ export function CardsContacts() {
                             isOpen={isOpenInformationModal}
                             onOpen={onOpenInformationModal}
                             onClose={onCloseInformationModal}
-                            contact={item} 
-                            onEdit={handleOpenEditModal} 
-                            onDelete={handleOpenDeleteModal} 
+                            contact={item}
+                            onEdit={handleOpenEditModal}
+                            onDelete={handleOpenDeleteModal}
                             handleOpenInformationsModal={handleOpenInformationsModal}
                         />
 
@@ -59,23 +53,23 @@ export function CardsContacts() {
                                 isOpen={isEditModalOpen}
                                 setIsOpen={onCloseEditModal}
                                 contact={selectedContact}
+                                updateContact={updateContact}
                             />
                         )}
 
                         {isDeleteModalOpen && selectedContactDeleted && (
                             <DeleteCardModal
                                 isOpenDeleteCardModal={isDeleteModalOpen}
-                                handleOpenModalDeleteCard={handleOpenDeleteModal}
-                                contact={selectedContactDeleted}
                                 setIsOpenDeleteCardModal={onCloseDeleteModal}
+                                contact={selectedContactDeleted}
                             />
                         )}
 
                         {isOpenInformationModal && selectedContactInformation && (
                             <InformationModalContact
-                                contact={selectedContactInformation}
                                 isOpen={isOpenInformationModal}
                                 onClose={onCloseInformationModal}
+                                contact={selectedContactInformation}
                                 handleOpenInformationsModal={handleOpenInformationsModal}
                             />
                         )}
