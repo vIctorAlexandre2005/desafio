@@ -6,5 +6,5 @@ export interface Contact {
     language: string
     email: string,
     gender: string,
-    avatar: string
+    avatar: string,
 };

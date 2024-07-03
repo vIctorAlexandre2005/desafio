@@ -10,6 +10,8 @@ export interface VariablesEditForm {
     language: string;
     email: string;
     urlAvatar: string;
+    age: number;
+    setAge: Dispatch<SetStateAction<number>>;
     setFirstName: Dispatch<SetStateAction<string>>;
     setLastName: Dispatch<SetStateAction<string>>;
     setEmail: Dispatch<SetStateAction<string>>;

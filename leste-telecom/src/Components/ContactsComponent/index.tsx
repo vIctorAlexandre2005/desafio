@@ -10,11 +10,6 @@ export function ContactsComponent() {
             <Box h={"100%"}>
                 <Flex overflow={"hidden"} p={"1.5rem"} h={"100%"} justify={"center"}>
                     <Box h={"100%"} flex={1}> {/* Card de filtragens */}
-                        <Heading p={"1rem"}>
-                            <Text fontWeight={"500"} fontSize={"1rem"}>
-                                Exibindo resultados: 1-6 de 540
-                            </Text>
-                        </Heading>
                         <CardsToFilterComponent />
                     </Box>
 

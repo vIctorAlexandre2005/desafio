@@ -2,11 +2,13 @@ import { StatesAction } from "@/Components/ButtonToFooter";
 import { useContextGlobal } from "@/Components/Context";
 import { contacts } from "@/services/getLesteTelecom";
 import { Contact } from "@/types/interfaces/contact";
+import { calculateAge } from "@/utils/calculateAge/calculateAge";
 import { formatBirthdayAddContactForm } from "@/utils/formatDate";
 import { Box, Button, Flex, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from "@chakra-ui/react";
 import { Fragment, useState } from "react";
 
-export function AddContactModal({ isOpen, onOpen, onClose } : StatesAction) {
+export function AddContactModal({ isOpen, onOpen, onClose }: StatesAction) {
+    
     const [newContact, setNewContact] = useState<Contact>({
         id: Date.now(),
         first_name: "",
@@ -15,8 +17,11 @@ export function AddContactModal({ isOpen, onOpen, onClose } : StatesAction) {
         gender: "",
         language: "",
         avatar: "",
-        birthday: ""
+        birthday: "",
+        age: 0,
     });
+
+    const [age, setAge] = useState(calculateAge(newContact.birthday));
 
     const { AddContact } = useContextGlobal();
 
@@ -31,6 +36,12 @@ export function AddContactModal({ isOpen, onOpen, onClose } : StatesAction) {
         setNewContact({ ...newContact, [name]: formattedValue });
     };
 
+    function handleAgeChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const formattedAge = calculateAge(e.target.value);
+
+        setAge(formattedAge);
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         AddContact(newContact);
@@ -42,7 +53,8 @@ export function AddContactModal({ isOpen, onOpen, onClose } : StatesAction) {
             gender: "",
             language: "",
             avatar: "",
-            birthday: ""
+            birthday: "",
+            age: 0,
         });
         onClose(); // Fechar modal após submissão
     };
@@ -59,46 +71,64 @@ export function AddContactModal({ isOpen, onOpen, onClose } : StatesAction) {
                 <ModalBody>
                     <Box as="form" onSubmit={handleSubmit}>
                         <Flex justify={"center"} gap={4}>
-                        <Box>
-                        <Text>First Name</Text>
-                        <Input
-                            w={"100%"}
-                            name="first_name"
-                            value={newContact.first_name}
-                            onChange={handleChange}
-                            mb={"1rem"}
-                            type="text"
-                            placeholder="Nome"
-                            _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
-                        />
-                        </Box>
+                            <Box>
+                                <Text>First Name</Text>
+                                <Input
+                                    w={"100%"}
+                                    name="first_name"
+                                    value={newContact.first_name}
+                                    onChange={handleChange}
+                                    mb={"1rem"}
+                                    type="text"
+                                    placeholder="Nome"
+                                    _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
+                                />
+                            </Box>
 
-                        <Box>
-                        <Text>Last Name</Text>
-                        <Input
-                            w={"100%"}
-                            name="last_name"
-                            value={newContact.last_name}
-                            onChange={handleChange}
-                            mb={"1rem"}
-                            type="text"
-                            placeholder="Sobrenome"
-                            _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
-                        />
-                        </Box>
+                            <Box>
+                                <Text>Last Name</Text>
+                                <Input
+                                    w={"100%"}
+                                    name="last_name"
+                                    value={newContact.last_name}
+                                    onChange={handleChange}
+                                    mb={"1rem"}
+                                    type="text"
+                                    placeholder="Sobrenome"
+                                    _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
+                                />
+                            </Box>
                         </Flex>
 
-                        <Text>Data de nascimento</Text>
-                        <Input
-                            name="birthday"
-                            value={newContact.birthday}
-                            onChange={handleChange}
-                            mb={"1rem"}
-                            type="text"
-                            placeholder="YYYY-MM-DD"
-                            maxLength={10}
-                            _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
-                        />
+                        <Flex justify={"center"} gap={4}>
+                            <Box>
+                                <Text>Data de nascimento</Text>
+                                <Input
+                                    name="birthday"
+                                    value={newContact.birthday}
+                                    onChange={handleChange}
+                                    mb={"1rem"}
+                                    type="text"
+                                    placeholder="YYYY-MM-DD"
+                                    maxLength={10}
+                                    _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
+                                />
+                            </Box>
+
+                            <Box>
+                                <Text>Idade</Text>
+                                <Input
+                                    name="birthday"
+                                    value={newContact.age}
+                                    onChange={handleAgeChange}
+                                    mb={"1rem"}
+                                    type="number"
+                                    placeholder="Ex: 22"
+                                    maxLength={2}
+                                    _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
+                                />
+                            </Box>
+                        </Flex>
 
                         <Text>Idioma</Text>
                         <Select
@@ -112,7 +142,7 @@ export function AddContactModal({ isOpen, onOpen, onClose } : StatesAction) {
                                 <Fragment key={idx}>
                                     <option value={item.language}>{item.language}</option>
                                 </Fragment>
-                            )) }
+                            ))}
                         </Select>
 
                         <Text>Email</Text>
@@ -150,31 +180,31 @@ export function AddContactModal({ isOpen, onOpen, onClose } : StatesAction) {
                         </Select>
 
                         <Flex gap={6}>
-                        <Button 
-                            type="submit" 
-                            gap={1} 
-                            _hover={{ 
-                                bg: 'green.green700' 
-                            }} 
-                            color={"white"} 
-                            w={"100%"} 
-                            bg={"green.green500"}
-                        >
-                            Adicionar
-                        </Button>
+                            <Button
+                                type="submit"
+                                gap={1}
+                                _hover={{
+                                    bg: 'green.green700'
+                                }}
+                                color={"white"}
+                                w={"100%"}
+                                bg={"green.green500"}
+                            >
+                                Adicionar
+                            </Button>
 
-                        <Button 
-                            _hover={{ 
-                                bg: 'red.900' 
-                            }} 
-                            onClick={onClose} 
-                            gap={1} 
-                            w={"100%"} 
-                            color='black.100' 
-                            bg='red.700'
-                        >
-                        Cancelar
-                    </Button>
+                            <Button
+                                _hover={{
+                                    bg: 'red.900'
+                                }}
+                                onClick={onClose}
+                                gap={1}
+                                w={"100%"}
+                                color='black.100'
+                                bg='red.700'
+                            >
+                                Cancelar
+                            </Button>
                         </Flex>
                     </Box>
                 </ModalBody>

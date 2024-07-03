@@ -4,6 +4,7 @@ import { Box, Button, Flex, Img, Input, Modal, ModalBody, ModalContent, ModalFoo
 import { Dispatch, SetStateAction } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { EditInputsForm } from "@/Components/InputsFormDefault/EditForm";
+import { calculateAge } from "@/utils/calculateAge/calculateAge";
 
 interface EditCardContacts {
     isOpen: boolean;
@@ -20,6 +21,7 @@ export function EditCardModal({ isOpen, setIsOpen, contact, updateContact }: Edi
     const [gender, setGender] = useState(contact.gender);
     const [language, setLanguage] = useState(contact.language);
     const [urlAvatar, setUrlAvatar] = useState(contact.avatar);
+    const [age, SetAge] = useState(calculateAge(contact.birthday));
 
     const handleSave = () => {
         const updatedContact = {
@@ -31,6 +33,7 @@ export function EditCardModal({ isOpen, setIsOpen, contact, updateContact }: Edi
             language: language,
             email: email,
             urlAvatar: urlAvatar,
+            age: age,
         };
         updateContact(updatedContact); // Chama a função do contexto para atualizar o contato
         setIsOpen(false); // Fecha o modal após salvar
@@ -53,6 +56,8 @@ export function EditCardModal({ isOpen, setIsOpen, contact, updateContact }: Edi
                         firstName={firstName}
                         gender={gender}
                         language={language}
+                        age={age}
+                        setAge={SetAge}
                         lastName={lastName}
                         urlAvatar={urlAvatar}
                         birthday={birthday}

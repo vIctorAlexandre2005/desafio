@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useContextGlobal } from "../Context";
 
 export function CardsToFilterComponent() {
-    const { handleGenderChange } = useContextGlobal();
+    const { handleGenderChange, handleLanguageChange } = useContextGlobal();
 
     return (
         <Card w={"16rem"} boxShadow={"none"} border={"1px solid"} borderColor={"black.100"} bg={"black.50"}>
@@ -13,7 +13,10 @@ export function CardsToFilterComponent() {
             </CardHeader>
 
             <CardBody>
-                <FiltersComponents onGenderChange={handleGenderChange} />
+                <FiltersComponents 
+                    handleLanguageChange={handleLanguageChange} 
+                    onGenderChange={handleGenderChange} 
+                />
             </CardBody>
         </Card>
     );

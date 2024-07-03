@@ -1,10 +1,17 @@
 import { contacts } from "@/services/getLesteTelecom";
+import { calculateAge } from "@/utils/calculateAge/calculateAge";
 import { InformationContactProps } from "@/utils/modals/InformationContact";
 import { Box, Button, Flex, Img, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from "@chakra-ui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 
 export function InformationInputsForm({ contact, handleOpenInformationsModal, isOpen, onClose }: InformationContactProps) {
+    const [age, setAge] = useState(calculateAge(contact.birthday));
+    function handleAgeChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const formattedAge = calculateAge(e.target.value);
+
+        setAge(formattedAge);
+    };
     return (
         <>
             <Img
@@ -39,17 +46,35 @@ export function InformationInputsForm({ contact, handleOpenInformationsModal, is
                 </Box>
             </Flex>
 
-            <Text>Data de nascimento</Text>
-            <Input
-                name="birthday"
-                value={contact.birthday}
-                mb={"1rem"}
-                type="text"
-                placeholder="YYYY-MM-DD"
-                maxLength={10}
-                readOnly
-                _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
-            />
+            <Flex justify={"center"} gap={4}>
+                <Box>
+                    <Text>Data de nascimento</Text>
+                    <Input
+                        name="birthday"
+                        value={contact.birthday}
+                        mb={"1rem"}
+                        type="text"
+                        placeholder="YYYY-MM-DD"
+                        maxLength={10}
+                        readOnly
+                        _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
+                    />
+                </Box>
+
+                <Box>
+                    <Text>Idade</Text>
+                    <Input
+                        name="birthday"
+                        value={age}
+                        onChange={handleAgeChange}
+                        mb={"1rem"}
+                        type="text"
+                        placeholder="YYYY-MM-DD"
+                        maxLength={2}
+                        _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
+                    />
+                </Box>
+            </Flex>
 
             <Text>Email</Text>
             <Input

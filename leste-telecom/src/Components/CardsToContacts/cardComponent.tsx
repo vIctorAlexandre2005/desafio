@@ -1,4 +1,5 @@
 import { Contact } from "@/types/interfaces/contact";
+import { calculateAge } from "@/utils/calculateAge/calculateAge";
 import { InformationModalContact } from "@/utils/modals/InformationContact";
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, HStack, Img, Text } from "@chakra-ui/react";
 import React from "react";
@@ -85,6 +86,13 @@ export const CardComponent: React.FC<CardComponentProps> = ({
                             <MdEmail size={18} /> Email:
                         </Text>
                         <Text fontSize={"0.85rem"} fontWeight={"normal"}>{contact.email}</Text>
+                    </Flex>
+
+                    <Flex gap={1} mb={"0.5rem"} align={"center"}>
+                        <Text gap={1} alignItems={"center"} fontWeight={"500"} fontSize={"0.85rem"} display={"flex"}>
+                            <MdEmail size={18} /> Idade:
+                        </Text>
+                        <Text fontSize={"0.85rem"} fontWeight={"normal"}>{calculateAge(contact.birthday)}</Text>
                     </Flex>
 
                     <Text fontSize={"0.85rem"} alignItems={"center"} display={"flex"}>

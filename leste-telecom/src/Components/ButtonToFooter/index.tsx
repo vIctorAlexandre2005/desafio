@@ -1,14 +1,11 @@
 import { AddContactModal } from "@/utils/modals/AddToContact";
 import { Button, useDisclosure } from "@chakra-ui/react";
-import { TbMessagePlus } from "react-icons/tb";
-import { useContextGlobal } from "../Context";
-import { useState } from "react";
-import { Contact } from "@/types/interfaces/contact";
+import { MdPersonAddAlt1 } from "react-icons/md";
 
 export interface StatesAction {
     isOpen: boolean,
     onOpen: () => void;
-    onClose: () => void
+    onClose: () => void;
 }
 
 export function ScrollToTopButton() {
@@ -33,11 +30,11 @@ export function ScrollToTopButton() {
                 zIndex={999}
                 onClick={onOpenAddContactModal}
             >
-                <TbMessagePlus size={24} />
+                <MdPersonAddAlt1 size={24} />
             </Button>
 
             {isAddContactModal && (
-                <AddContactModal 
+                <AddContactModal
                     isOpen={isAddContactModal} 
                     onOpen={onOpenAddContactModal} 
                     onClose={onCloseAddContactModal} 
