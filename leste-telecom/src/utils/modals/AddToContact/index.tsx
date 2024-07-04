@@ -121,7 +121,7 @@ export function AddContactModal({ isOpen, onOpen, onClose }: StatesAction) {
                                     onChange={handleAgeChange}
                                     mb={"1rem"}
                                     type="number"
-                                    placeholder="Ex: 22"
+                                    placeholder="Ex: 23"
                                     maxLength={2}
                                     _focus={{ outline: 0, border: '1px solid', borderColor: 'green.green600' }}
                                 />
