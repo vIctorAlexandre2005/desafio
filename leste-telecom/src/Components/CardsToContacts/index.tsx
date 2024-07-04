@@ -35,7 +35,7 @@ export function CardsContacts() {
 
     return (
         <>
-            <SimpleGrid columns={3} spacingX='40px' spacingY='20px'>
+            <SimpleGrid columns={{ desktop: 3, tabletMedium: 2 }} spacingX='40px' spacingY='20px'>
                 {filteredContacts.map((item, idx) => (
                     <Fragment key={idx}>
                         <CardComponent

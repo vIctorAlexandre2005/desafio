@@ -8,7 +8,7 @@ export function ContactsComponent() {
     return (
         <ParamsContextProvider>
             <Box h={"100%"}>
-                <Flex overflow={"hidden"} p={"1.5rem"} h={"100%"} justify={"center"}>
+                <Flex overflow={"hidden"} gap={{ xs: 4, tablet: 0 }} flexDir={{ xs: 'column', tablet: 'row' }} p={"1.5rem"} h={"100%"} justify={"center"}>
                     <Box h={"100%"} flex={1}> {/* Card de filtragens */}
                         <CardsToFilterComponent />
                     </Box>

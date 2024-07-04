@@ -10,7 +10,7 @@ interface FiltersComponentsProps {
 }
 
 export const FiltersComponents: React.FC<FiltersComponentsProps> = ({ onGenderChange, handleLanguageChange }) => {
-    const { selectedGender, setSelectedGender, filterByAge, selectedLanguage, setSelectedLanguage } = useContextGlobal();
+    const { selectedGender, setSelectedGender, filterByAge, setSelectedLanguage } = useContextGlobal();
 
     const handleGenderChangeFilter = (value: string) => {
         setSelectedGender(value);
@@ -30,11 +30,12 @@ export const FiltersComponents: React.FC<FiltersComponentsProps> = ({ onGenderCh
 
     return (
         <>
+            {/* Filtragem por gênero */}
             {FiltersGenders.map((item, idx) => (
                 <Fragment key={idx}>
                     <Text color={"green.green500"} mb={"0.5rem"} fontSize={"1.25rem"}>{item.title}</Text>
                     <RadioGroup value={selectedGender} onChange={handleGenderChangeFilter}>
-                        <Stack> 
+                        <Stack>
                             <Fragment key={item.value}>
                                 <Radio value={item.value}>{item.options}</Radio>
                             </Fragment>
@@ -52,6 +53,7 @@ export const FiltersComponents: React.FC<FiltersComponentsProps> = ({ onGenderCh
                 </Stack>
             </RadioGroup>
 
+            {/* Filtragem por idioma */}
             <Text color={"green.green500"} mb={"0.5rem"} fontSize={"1.25rem"}>Idiomas</Text>
             <Select value={""} onChange={handleChangeLanguage}>
                 {contacts.map((item, idx) => (
