@@ -17,8 +17,7 @@ export function AddContactModal({ isOpen, onOpen, onClose }: StatesAction) {
         gender: "",
         language: "",
         avatar: "",
-        birthday: "",
-        age: 0,
+        birthday: ""
     });
 
     const [age, setAge] = useState(calculateAge(newContact.birthday));
@@ -53,8 +52,7 @@ export function AddContactModal({ isOpen, onOpen, onClose }: StatesAction) {
             gender: "",
             language: "",
             avatar: "",
-            birthday: "",
-            age: 0,
+            birthday: ""
         });
         onClose(); // Fechar modal após submissão
     };
@@ -119,7 +117,7 @@ export function AddContactModal({ isOpen, onOpen, onClose }: StatesAction) {
                                 <Text>Idade</Text>
                                 <Input
                                     name="birthday"
-                                    value={newContact.age}
+                                    value={calculateAge(newContact.birthday)}
                                     onChange={handleAgeChange}
                                     mb={"1rem"}
                                     type="number"
